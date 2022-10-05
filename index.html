@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blackjack</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="scripts.js"></script>
+</head>
+<body>
+    <div id="header">
+        <img src="/assets/img/banner.png" alt="" id="banner">
+    </div>   
+    <div class="board-container">
+        <h2 id="dealer-total">Dealer:</h2>
+        <div class="dealer" id="dealer-cards">
+            <img id="hidden-card" src="/assets/img/cardBack_newRed.png" alt="">
+        </div>
+
+        <h2 id="player-total">You:</h2>
+        <div class="player" id="player-cards">
+        </div>
+        <div class="buttons">
+            <button onclick=hit() id="hitBtn">Hit</button>
+            <button onclick=stay() id="stayBtn">Stay</button>
+        </div>  
+        <div id="stats-container">
+            <span id="points">Points: 0</span>
+            <span id="lives">Lives: 3</span>
+        </div>       
+    </div> 
+    <div id="next-round">
+        <div class="next-round-container">
+            <span id="round-msg">Next Round</span>
+            <button id="go-next-round" class="play-again" onclick=nextRound()>Next Round</button>
+        </div>
+    </div>
+    <div id="game-over">
+        <div class="game-over-container">
+            <span>Game Over</span>
+            <button id="play-again" class="play-again" onclick=playAgain()>Play Again</button>
+        </div>
+    </div>
+
+</body>
+</html>
