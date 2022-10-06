@@ -10,14 +10,14 @@ body {
     font-size: 2vw;
     margin: auto;
     text-align: center;
-    height: 80vh;
+    height: 100vh;
     width: 100vw;
     background: linear-gradient(45deg, rgb(11, 80, 26) 0%, rgb(1, 148, 20) 100%);
-    background-image: url(/assets/img/pokerBoard.jpg);
+    background-image: url(/assets/img/pokerBoardGreen.png);
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
-    background-color: black;
+    background-color: #001d04;
 }
 
 h2 {
@@ -26,21 +26,25 @@ h2 {
 }
 
 #lives, #points{
-    margin: 0 60px;    
+    margin: 30px 60px;    
 }
 
 #header {
-    width: 100%;
-    height: 200px;
+    position: absolute;
+    top: 50px;
+    width: 31%;
+    height: 160px;
     background: black;
     box-shadow: 0px 3px 9px 0px rgba(0,0,0,0.50);
     -webkit-box-shadow: 0px 3px 9px 0px rgba(0,0,0,0.50);
     -moz-box-shadow: 0px 3px 9px 0px rgba(0,0,0,0.50);
 }
+
 #banner {
+    transform: scale(0.8);
     position: absolute;
-    top: 50px;
-    left: 200px;;
+    top: 30px;
+    left: 150px;;
 }
 
 .board-container {
@@ -115,10 +119,10 @@ h2 {
 
 .game-over-container, .next-round-container {
     position: absolute;
-    top: 50%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-image: url("/assets/img/pokerBoard.jpg");
+    background-image: url("/assets/img/pokerBoardGreen.png");
     background-size: 100vw;
     background-position: center center;
     height: 200px;

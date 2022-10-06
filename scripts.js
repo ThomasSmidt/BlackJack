@@ -13,6 +13,7 @@ let message;
 let lost = false;
 let points = 0;
 let dealerTotalMinusHidden;
+
 window.onload = function() {
     startGame()
 }
@@ -54,9 +55,7 @@ function runGame() {
     hiddenCard = deck.pop();
     console.log(hiddenCard)
     dealerTotal += hiddenCard.cardWeight;
-    while (dealerTotal < 17) {
-        createCard("dealer-cards", isDealer)      
-    }
+    createCard("dealer-cards", isDealer)  
     for (let i = 0; i < 2; i++) {
         createCard("player-cards", isDealer = false)
     }
@@ -65,15 +64,15 @@ function runGame() {
     document.getElementById("player-total").innerHTML = "You: " + playerTotal;
 }
 
-function createCard(playerOrDealerCards = "", dealer) {
+function createCard(playerOrDealerCards = "", isDealer) {
     let cardImg = document.createElement("img");
     let card = deck.pop(); 
     if (isDealer) {
-        dealerTotal += card.cardWeight
+        dealerTotal += card.cardWeight; 
         dealerAceCount += checkAce(card.cardValue);
-        changeAce();        
+        changeAce();    
     } else if (isDealer == false) {
-        playerTotal += card.cardWeight
+        playerTotal += card.cardWeight;
         playerAceCount += checkAce(card.cardValue);
         changeAce();
     }
@@ -97,6 +96,21 @@ function hit() {
 
 function stay() {
     canHit = false;
+    console.log("dealer: " + dealerTotal + "player: " + playerTotal)
+    if (dealerTotal < playerTotal) {
+        while(dealerTotal < 17){
+            let cardImg = document.createElement("img");
+            let card = deck.pop();  
+            console.log("we're in lads");
+            dealerTotal += card.cardWeight; 
+            dealerAceCount += checkAce(card.cardValue);
+            changeAce();
+            cardImg.src = "/assets/img/" + card.cardValue + "_" + card.cardSuit + ".png";
+            cardImg.className='card-image';
+            document.getElementById("dealer-cards").append(cardImg);  
+        }
+    }
+
     document.getElementById("hidden-card").src = "/assets/img/" + hiddenCard.cardValue + "_" + hiddenCard.cardSuit + ".png";
     document.getElementById("dealer-total").innerHTML = "Dealer: " + dealerTotal;
     document.getElementById("player-total").innerHTML = "You: " + playerTotal;
@@ -209,8 +223,3 @@ function changeAce() {
     }
 }
 
-function dealerHit() {
-    while(dealerTotal < playerTotal){
-        
-    }
-}
