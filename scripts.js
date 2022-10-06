@@ -82,6 +82,9 @@ function createCard(playerOrDealerCards = "", isDealer) {
 }
 
 function hit() {
+    if (playerTotal == 21) {
+        canHit = false;
+    }
     if (canHit) {
         createCard("player-cards", isDealer = false)  
         console.log("Player: " + playerTotal)
@@ -89,7 +92,7 @@ function hit() {
         document.getElementById("player-total").innerHTML = "You: " + playerTotal;
         if (playerTotal > 21) {
             checkRound();
-        }       
+        }  
     }
     return;
 }
