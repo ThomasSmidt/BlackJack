@@ -100,20 +100,20 @@ function hit() {
 function stay() {
     canHit = false;
     console.log("dealer: " + dealerTotal + "player: " + playerTotal)
-    if (dealerTotal < playerTotal) {
-        while(dealerTotal < 17){
-            let cardImg = document.createElement("img");
-            let card = deck.pop();  
-            console.log("we're in lads");
-            dealerTotal += card.cardWeight; 
-            dealerAceCount += checkAce(card.cardValue);
-            changeAce();
-            cardImg.src = "/assets/img/" + card.cardValue + "_" + card.cardSuit + ".png";
-            cardImg.className='card-image';
-            document.getElementById("dealer-cards").append(cardImg);  
-        }
+    while(dealerTotal < 17){
+        isDealer = true;
+        let cardImg = document.createElement("img");
+        let card = deck.pop();
+        dealerTotal += card.cardWeight; 
+        dealerAceCount += checkAce(card.cardValue);
+        console.log("ace count: " + dealerAceCount)
+        console.log("card weight 1:" + card.cardWeight)
+        changeAce();
+        console.log("card weight 2:" + card.cardWeight)
+        cardImg.src = "/assets/img/" + card.cardValue + "_" + card.cardSuit + ".png";
+        cardImg.className='card-image';
+        document.getElementById("dealer-cards").append(cardImg);
     }
-
     document.getElementById("hidden-card").src = "/assets/img/" + hiddenCard.cardValue + "_" + hiddenCard.cardSuit + ".png";
     document.getElementById("dealer-total").innerHTML = "Dealer: " + dealerTotal;
     document.getElementById("player-total").innerHTML = "You: " + playerTotal;
@@ -122,7 +122,7 @@ function stay() {
 
 function checkRound() {
     if (playerTotal <= 21 && playerTotal == dealerTotal) {
-        message = "Tie!"
+        message = "Tie!";
         lost = false;
         console.log(message);
         document.getElementById("next-round").style.visibility = "visible";
@@ -157,6 +157,7 @@ function playAgain() {
     playerLives = 3;
     lost = false;
     points = 0;
+    document.getElementById("points").innerHTML = "Points: " + points;
 
     let cardImg = document.querySelectorAll(".card-image");
     cardImg.forEach(card => card.remove());
