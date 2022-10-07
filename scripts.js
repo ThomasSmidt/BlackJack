@@ -13,6 +13,8 @@ let message;
 let lost = false;
 let points = 0;
 let dealerTotalMinusHidden;
+let playerChips = 1000;
+let playerHand = new Array();
 
 window.onload = function() {
     startGame()
@@ -89,7 +91,7 @@ function hit() {
         createCard("player-cards", isDealer = false)  
         console.log("Player: " + playerTotal)
         console.log("AI: " + dealerTotal)
-        document.getElementById("player-total").innerHTML = "You: " + playerTotal;
+        document.getElementById("player-total").innerHTML = "You:   " + playerTotal;
         if (playerTotal > 21) {
             checkRound();
         }  
@@ -116,7 +118,7 @@ function stay() {
     }
     document.getElementById("hidden-card").src = "/assets/img/" + hiddenCard.cardValue + "_" + hiddenCard.cardSuit + ".png";
     document.getElementById("dealer-total").innerHTML = "Dealer: " + dealerTotal;
-    document.getElementById("player-total").innerHTML = "You: " + playerTotal;
+    document.getElementById("player-total").innerHTML = "You:   " + playerTotal;
     checkRound();
 }
 

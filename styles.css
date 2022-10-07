@@ -7,44 +7,65 @@
 
 body {
     font-family:Arial, Helvetica, sans-serif;
-    font-size: 2vw;
+    font-size: 30px;
     margin: auto;
     text-align: center;
     height: 100vh;
     width: 100vw;
     background: linear-gradient(45deg, rgb(11, 80, 26) 0%, rgb(1, 148, 20) 100%);
-    background-image: url(/assets/img/pokerBoardGreen.png);
+    background-image: url(/assets/img/pokerBoardGreyGreen.png);
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
     background-color: #001d04;
 }
 
-h2 {
-    font-size: 1em;
-    padding: 20px;
+.sum-container {
+    width: 9%;
+    display:flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 0 auto;
 }
 
-#lives, #points{
-    margin: 30px 60px;    
+
+#dealer-total, #player-total {
+    font-size: 1em; 
 }
 
-#header {
-    position: absolute;
-    top: 50px;
-    width: 31%;
-    height: 160px;
-    background: black;
-    box-shadow: 0px 3px 9px 0px rgba(0,0,0,0.50);
-    -webkit-box-shadow: 0px 3px 9px 0px rgba(0,0,0,0.50);
-    -moz-box-shadow: 0px 3px 9px 0px rgba(0,0,0,0.50);
+#dealer-total {
+
+}
+
+#player-total {
+    margin-top: 13vh;
+}
+#points, #lives{
+    margin: 0 72px;
 }
 
 #banner {
-    transform: scale(0.8);
     position: absolute;
-    top: 30px;
-    left: 150px;;
+    margin-left: auto;
+    margin-right: auto;
+    height: 7vh;
+    top: 5%;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+#poker-table {
+    position: absolute;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    height: 60vh;
+    top: 5%;
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: -1;
 }
 
 .board-container {
@@ -54,20 +75,27 @@ h2 {
     flex-direction: column;
 }
 
+.dealer {
+    margin-top: 7.5vh;
+}
+
+.player {
+    margin-top: 0vh;
+}
+
 .dealer, .player {
     height: fit-content;
     width: auto;
     align-items: center;
     display: flex;
     justify-content: center;
-    padding: 10px;
+    padding: 1vw;
 }
 
 .dealer img, .player img {
-    margin: 50px;
+    margin: 2.5vh 1vw;
     transform: scale(1.5);
-    height: 150px;
-    width: 100px;
+    height: 9.2vh;
 }
 
 #hidden-card {
@@ -78,7 +106,7 @@ h2 {
 }
 
 .buttons {
-    margin: 0 auto;
+    margin: 3vh auto 0 auto;
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -87,7 +115,7 @@ h2 {
 }
 
 .buttons button {
-    font-size: 2rem;
+    font-size: 1em;
     font-weight: bold;
     width: 180px;
     height: 70px;
@@ -140,7 +168,7 @@ h2 {
     color: white;
     border-color: white;
     border-radius: 50px;
-    font-size: 1.5rem;
+    font-size: 1em;
     cursor: pointer;
     margin: 16px;
     padding: 15px 20px;
@@ -151,6 +179,7 @@ h2 {
     background-color: #e40000;
     background-image: linear-gradient(#b30000, #ff5656);
 }
+
 .card-image {
     border-radius: 8px;
     box-shadow: 0px 3px 9px 0px rgba(0,0,0,0.50);
