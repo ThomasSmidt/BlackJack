@@ -13,22 +13,33 @@
     </div>   
     <div class="board-container">
         <div class="dealer" id="dealer-cards">
-            <img id="hidden-card" src="/assets/img/cardBack_newRed.png" alt="">
+            <img id="hidden-card" src="" alt="">
         </div>
         <div class="sum-container">
-            <h2 id="dealer-total">Dealer:</h2>
-            <h2 id="player-total">You:   </h2>
+            <h2 id="dealer-total"></h2>
+            <h2 id="player-total"></h2>
         </div>
         <div class="player" id="player-cards">
         </div>
-        <div class="buttons">
-            <button onclick=hit() id="hitBtn">Hit</button>
-            <button onclick=stay() id="stayBtn">Stay</button>
-        </div>            
-        <div id="stats-container">           
-            <span id="points">Points: 0</span>
-            <span id="lives">Lives: 3</span>
-        </div>           
+        <div class="options-container">
+            <div class="buttons">
+                <button onclick=hit() id="hitBtn">Hit</button>
+                <button onclick=bet() id="betBtn">Bet</button>
+                <button onclick=stay() id="stayBtn">Stay</button>
+            </div>   
+            <div class="betRange">
+                <input type="range" step=10 min="10" max="200" value="10" class="slider" id="betSlider" oninput="this.nextElementSibling.value = this.value">
+                <output id="betAmount">10</output> 
+            </div>
+                    
+            <div id="stats-container">     
+                <span id="chips"></span>
+                <span id="currentBet"></span>
+                <span id="points"></span>
+                <span id="lives"></span>
+            </div>        
+        </div>
+   
     </div> 
     <div id="next-round">
         <div class="next-round-container">
@@ -42,6 +53,5 @@
             <button id="play-again" class="play-again" onclick=playAgain()>Play Again</button>
         </div>
     </div>
-
 </body>
 </html>

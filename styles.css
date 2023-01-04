@@ -31,17 +31,21 @@ body {
 
 #dealer-total, #player-total {
     font-size: 1em; 
-}
-
-#dealer-total {
-
+    font-weight: 100;
+    text-shadow: 1px 1px 3px #000000;
 }
 
 #player-total {
-    margin-top: 13vh;
+    position: fixed;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -100%);
 }
-#points, #lives{
-    margin: 0 72px;
+#dealer-total {
+    position: fixed;
+    top: 28%;
+    left: 50%;
+    transform: translate(-50%, -100%);
 }
 
 #banner {
@@ -60,7 +64,8 @@ body {
     position: absolute;
     margin-left: auto;
     margin-right: auto;
-    height: 60vh;
+    height: 60%;
+    min-height: 500px;
     top: 5%;
     left: 0;
     right: 0;
@@ -69,18 +74,29 @@ body {
 }
 
 .board-container {
+    position: fixed;
     display: flex;
     width: 100%;
     height: 100%;
     flex-direction: column;
+    
 }
 
 .dealer {
     margin-top: 7.5vh;
+    position: fixed;
+    /*center position*/
+    top: 0%;
+    left: 50%;
+    transform: translate(-50%, 0);
 }
 
 .player {
     margin-top: 0vh;
+    position: fixed;
+    top: 62%;
+    left: 50%;
+    transform: translate(-50%, -100%);
 }
 
 .dealer, .player {
@@ -93,7 +109,7 @@ body {
 }
 
 .dealer img, .player img {
-    margin: 2.5vh 1vw;
+    margin: 2.5vh 1.1vw;
     transform: scale(1.5);
     height: 9.2vh;
 }
@@ -117,14 +133,18 @@ body {
 .buttons button {
     font-size: 1em;
     font-weight: bold;
-    width: 180px;
+    width: 8rem;
     height: 70px;
-    margin: 20px 40px;
-    background-image: linear-gradient(#ff5656, #b30000);
+    margin: 20px 10px;
+    background-image: linear-gradient(#999, #444);
     color: white;
     border-color: white;
     border-radius: 50px;
     cursor: pointer;
+}
+
+#hitBtn, #stayBtn {
+    transform: scale(.9);
 }
 
 .buttons button:hover {
@@ -145,6 +165,12 @@ body {
     width: 100vw;
 }
 
+@keyframes delayedFadeIn{
+    0% {opacity: 0;}
+    50% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
 .game-over-container, .next-round-container {
     position: absolute;
     top: 40%;
@@ -153,8 +179,8 @@ body {
     background-image: url("/assets/img/pokerBoardGreen.png");
     background-size: 100vw;
     background-position: center center;
-    height: 200px;
-    width: 500px;
+    height: 11rem;
+    width: 20rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -185,4 +211,105 @@ body {
     box-shadow: 0px 3px 9px 0px rgba(0,0,0,0.50);
     -webkit-box-shadow: 0px 3px 9px 0px rgba(0,0,0,0.50);
     -moz-box-shadow: 0px 3px 9px 0px rgba(0,0,0,0.50);
+    transition: 200ms;
+}
+
+.card-image:hover {
+    transform: scale(1.55);
+    box-shadow: 0px 3px 9px 0px rgba(163, 255, 193, 0.5);
+}
+
+#betBtn {
+    width: 13rem;
+}
+
+#betSlider {
+    width: 14rem;
+    padding-bottom: 10px;
+}
+
+input[type=range] {
+-webkit-appearance: none; 
+width: 100%;
+background: transparent; 
+}
+
+input[type=range]::-webkit-slider-thumb {
+-webkit-appearance: none;
+}
+
+input[type=range]:focus {
+outline: none;
+}
+
+input[type=range]::-ms-track {
+width: 100%;
+cursor: pointer;
+background: transparent; 
+border-color: transparent;
+color: transparent;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: 1px solid #ffffff;
+    height: 1rem;
+    width: 16px;
+    border-radius: 30px;
+    background: linear-gradient(#ff5656, #b30000);
+    cursor: pointer;
+    margin-top: -1px; 
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 1rem;
+    cursor: pointer;
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    background: linear-gradient(#ffffff, #b6b6b6);
+    border-radius: 30px;
+    border: 1px solid #ffffff;
+}
+
+.betRange {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+}
+
+#betAmount {
+    font-size: 1.5rem;
+    padding: .5rem;
+    margin-top: -9px;
+}
+
+#stats-container {
+    font-weight: 700;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.options-container {
+    position:fixed;
+    top: 74%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes spin1 { 
+    0% { opacity: 0 } 
+    100% { opacity: 1  }
+}
+.card-image {
+    animation: spin1 300ms linear;
+}
+
+#chips, #currentBet {
+    text-shadow: 1px 1px 3px #000000;
 }

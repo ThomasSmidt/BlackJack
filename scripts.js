@@ -9,23 +9,42 @@ let dealerAceCount = 0;
 let playerAceCount = 0;
 let playerLives = 3;
 let canHit = true;
+let canStay = true;
 let message;
 let lost = false;
 let points = 0;
-let dealerTotalMinusHidden;
+let dealerTotalMinusHidden = 0;
 let playerChips = 1000;
 let playerHand = new Array();
+let currentBet = 0;
+let canBet = true;
+let hasBet = false;
+let hiddenCardImage = document.getElementById("hidden-card");
 
 window.onload = function() {
     startGame()
 }
 
 function startGame() { 
-    document.getElementById("lives").innerHTML = "Lives: " + playerLives; 
+    toggleHit();
+    toggleStay()
+    document.getElementById("dealer-total").innerHTML = "Dealer: " + dealerTotal;
+    document.getElementById("player-total").innerHTML = "You: " + playerTotal;
+    canBet = true;
+    betSlider.setAttribute('max', playerChips);
+    betSlider.setAttribute('value', playerChips / 2);
+    document.getElementById("chips").innerHTML = "Chips: " + playerChips; 
+    document.getElementById("currentBet").innerHTML = "Current Bet: " + 0;
+    betAmount.innerHTML = betSlider.value;
+    betSlider.disabled = false;
+    betBtn.disabled = false;
+    betBtn.style.backgroundImage = ('linear-gradient(#ff5656, #b30000)');
+    let hiddenCardImage = document.getElementById("hidden-card");
+    hiddenCardImage.src = "";   
     makeDeck();
     shuffleDeck(deck);
-    runGame();
 }
+
 function makeDeck() {
     deck = new Array();
     for (let i = 0; i < cardValues.length; i++)
@@ -53,7 +72,9 @@ function shuffleDeck(deck) {
     }
 }
 
-function runGame() {
+function runGame() {   
+    let hiddenCardImage = document.getElementById("hidden-card");
+    hiddenCardImage.src = "/assets/img/cardBack_newRed.png";   
     hiddenCard = deck.pop();
     console.log(hiddenCard)
     dealerTotal += hiddenCard.cardWeight;
@@ -61,12 +82,14 @@ function runGame() {
     for (let i = 0; i < 2; i++) {
         createCard("player-cards", isDealer = false)
     }
+    
     dealerTotalMinusHidden = dealerTotal - hiddenCard.cardWeight;
     document.getElementById("dealer-total").innerHTML = "Dealer: " + dealerTotalMinusHidden;
     document.getElementById("player-total").innerHTML = "You: " + playerTotal;
 }
 
-function createCard(playerOrDealerCards = "", isDealer) {
+
+async function createCard(playerOrDealerCards = "", isDealer) {
     let cardImg = document.createElement("img");
     let card = deck.pop(); 
     if (isDealer) {
@@ -79,13 +102,20 @@ function createCard(playerOrDealerCards = "", isDealer) {
         changeAce();
     }
     cardImg.src = "/assets/img/" + card.cardValue + "_" + card.cardSuit + ".png";
-    cardImg.className='card-image';
-    document.getElementById(playerOrDealerCards).append(cardImg);     
+    cardImg.className='card-image';    
+    document.getElementById(playerOrDealerCards).append(cardImg);
+    if (playerTotal == 21) {
+        toggleHit();
+    }
 }
 
 function hit() {
+    if (!hasBet) {
+        return;
+    }
+    disableBet();
     if (playerTotal == 21) {
-        canHit = false;
+        toggleHit();
     }
     if (canHit) {
         createCard("player-cards", isDealer = false)  
@@ -99,22 +129,31 @@ function hit() {
     return;
 }
 
-function stay() {
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function stay() {
+    if (!hasBet) {
+      return;
+    }
     canHit = false;
     console.log("dealer: " + dealerTotal + "player: " + playerTotal)
     while(dealerTotal < 17){
-        isDealer = true;
-        let cardImg = document.createElement("img");
-        let card = deck.pop();
-        dealerTotal += card.cardWeight; 
-        dealerAceCount += checkAce(card.cardValue);
-        console.log("ace count: " + dealerAceCount)
-        console.log("card weight 1:" + card.cardWeight)
-        changeAce();
-        console.log("card weight 2:" + card.cardWeight)
-        cardImg.src = "/assets/img/" + card.cardValue + "_" + card.cardSuit + ".png";
-        cardImg.className='card-image';
-        document.getElementById("dealer-cards").append(cardImg);
+      isDealer = true;
+      let cardImg = document.createElement("img");
+      let card = deck.pop();
+      dealerTotal += card.cardWeight; 
+      dealerAceCount += checkAce(card.cardValue);
+      console.log("ace count: " + dealerAceCount)
+      console.log("card weight 1:" + card.cardWeight)
+      changeAce();
+      console.log("card weight 2:" + card.cardWeight)
+      cardImg.src = "/assets/img/" + card.cardValue + "_" + card.cardSuit + ".png";
+      cardImg.className='card-image';
+      document.getElementById("dealer-cards").append(cardImg);
+      // Add a delay of 1 second (1000 milliseconds)
+      await sleep(500);
     }
     document.getElementById("hidden-card").src = "/assets/img/" + hiddenCard.cardValue + "_" + hiddenCard.cardSuit + ".png";
     document.getElementById("dealer-total").innerHTML = "Dealer: " + dealerTotal;
@@ -126,6 +165,7 @@ function checkRound() {
     if (playerTotal <= 21 && playerTotal == dealerTotal) {
         message = "Tie!";
         lost = false;
+        playerChips += currentBet * 1;
         console.log(message);
         document.getElementById("next-round").style.visibility = "visible";
         document.getElementById("next-round").style.opacity = "100%";
@@ -134,13 +174,15 @@ function checkRound() {
         message = "You Won the Round!"
         lost = false;
         points += 1;
-        document.getElementById("points").innerHTML = "Points: " + points;
+        playerChips += currentBet * 2;
         console.log(message);
         document.getElementById("next-round").style.visibility = "visible";
         document.getElementById("next-round").style.opacity = "100%";
         document.getElementById("round-msg").innerHTML = message;
     } else if (playerTotal <= 21 && playerTotal < dealerTotal || playerTotal > 21) {
         message = "You Lost the Round!"
+        betSlider.setAttribute('max', playerChips);
+        betSlider.setAttribute('value', playerChips);
         console.log(message);
         lost = true;
         playerLives -= 1;
@@ -159,8 +201,7 @@ function playAgain() {
     playerLives = 3;
     lost = false;
     points = 0;
-    document.getElementById("points").innerHTML = "Points: " + points;
-
+    playerChips = 1000;
     let cardImg = document.querySelectorAll(".card-image");
     cardImg.forEach(card => card.remove());
     document.getElementById("game-over").style.visibility = "hidden";
@@ -177,7 +218,6 @@ function nextRound() {
     isDealer = true;
     canHit = true;
     lost = false;
-
     let cardImg = document.querySelectorAll(".card-image");
     cardImg.forEach(card => card.remove());
     document.getElementById("next-round").style.visibility = "hidden";
@@ -186,7 +226,16 @@ function nextRound() {
 }
 
 function checkGameOver() {
-    if (lost == true) {
+    if (playerChips <= 0) {
+        console.log("Game Over");
+        document.getElementById("game-over").style.visibility = "visible";
+        document.getElementById("game-over").style.opacity = "100%";
+    } else {
+        document.getElementById("next-round").style.visibility = "visible";
+        document.getElementById("next-round").style.opacity = "100%";
+        document.getElementById("round-msg").innerHTML = "You Lost the Round!";
+    }
+/*   if (lost == true) {
         console.log("checkGameOver")  
         document.getElementById("lives").innerHTML = "Lives: " + playerLives;
         console.log("lives: " + playerLives)        
@@ -203,6 +252,7 @@ function checkGameOver() {
         console.log("move")
         return;
     }
+    */
 }
 
 function checkAce(card) {
@@ -214,13 +264,13 @@ function checkAce(card) {
 }
 
 function changeAce() {
-    if (isDealer == true) {
+    if (isDealer) {
         while (dealerTotal > 21 && dealerAceCount > 0) {
-            dealerTotal -= 10
+            dealerTotal -= 10;
             dealerAceCount -= 1;
             return dealerTotal;          
         }         
-    }else if (isDealer == false) {
+    }else if (!isDealer) {
         while (playerTotal > 21 && playerAceCount > 0) {
             playerTotal -= 10;
             playerAceCount -= 1;
@@ -229,3 +279,51 @@ function changeAce() {
     }
 }
 
+function bet() {
+    if (canBet) {
+        currentBet = document.getElementById("betAmount").value; 
+        disableBet();
+        playerChips -= currentBet;
+        document.getElementById("chips").innerHTML = "Chips: " + playerChips; 
+        document.getElementById("currentBet").innerHTML = "Current Bet: " + currentBet;  
+        hasBet = true;
+        toggleHit()
+        toggleStay()
+        runGame();
+    }
+    return;
+}
+
+function disableBet(){
+    betBtn.disabled = true;
+    betBtn.style.backgroundImage = ('linear-gradient(#999, #444)');
+    canBet = false; 
+    betSlider.disabled = true;
+    return;
+}
+
+function toggleHit(){
+    if (canHit) {
+    hitBtn.disabled = true;
+    hitBtn.style.backgroundImage = ('linear-gradient(#999, #444)');
+    canHit = false; 
+    return;
+    }
+    hitBtn.disabled = false;;
+    hitBtn.style.backgroundImage = ('linear-gradient(#ff5656, #b30000)');
+    canHit = true; 
+    return
+}
+
+function toggleStay() {
+    if (canStay) {
+    stayBtn.disabled = true;
+    stayBtn.style.backgroundImage = ('linear-gradient(#999, #444)');
+    canStay = false; 
+    return;
+    }
+    stayBtn.disabled = false;;
+    stayBtn.style.backgroundImage = ('linear-gradient(#ff5656, #b30000)');
+    canStay = true; 
+    return
+}
