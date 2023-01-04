@@ -235,7 +235,8 @@ function checkGameOver() {
         document.getElementById("next-round").style.opacity = "100%";
         document.getElementById("round-msg").innerHTML = "You Lost the Round!";
     }
-/*   if (lost == true) {
+/*   
+if (lost == true) {
         console.log("checkGameOver")  
         document.getElementById("lives").innerHTML = "Lives: " + playerLives;
         console.log("lives: " + playerLives)        
@@ -252,7 +253,7 @@ function checkGameOver() {
         console.log("move")
         return;
     }
-    */
+*/
 }
 
 function checkAce(card) {
