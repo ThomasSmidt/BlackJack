@@ -4,7 +4,6 @@
     padding: 0;
     color: white;
 }
-
 body {
     font-family:Arial, Helvetica, sans-serif;
     font-size: 30px;
@@ -312,4 +311,41 @@ input[type=range]::-webkit-slider-runnable-track {
 
 #chips, #currentBet {
     text-shadow: 1px 1px 3px #000000;
+}
+
+.no-mobile-support {
+    display: none;
+    width: 1000px;
+    height: 1000px;
+    background-color: #000000;
+}
+
+@media screen and (max-width: 800px) {
+    body {
+        background-image: url("");
+        background-size: 100vw;
+        background-position: center center;
+    }
+    .no-mobile-support {
+        position:fixed;
+        /*center position fixed*/
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        /*make the div fill the whole screen*/
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 50px;
+    }
+    .board-container {
+        display: none;
+        opacity: 0;
+    }
+    #poker-table {
+        display: none;
+    }
 }
