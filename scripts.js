@@ -74,7 +74,7 @@ function shuffleDeck(deck) {
 
 function runGame() {   
     let hiddenCardImage = document.getElementById("hidden-card");
-    hiddenCardImage.src = "/assets/img/cardBack_newRed.png";   
+    hiddenCardImage.src = "/BlackJack/assets/img/cardBack_newRed.png";   
     hiddenCard = deck.pop();
     console.log(hiddenCard)
     dealerTotal += hiddenCard.cardWeight;
@@ -101,7 +101,7 @@ async function createCard(playerOrDealerCards = "", isDealer) {
         playerAceCount += checkAce(card.cardValue);
         changeAce();
     }
-    cardImg.src = "/assets/img/" + card.cardValue + "_" + card.cardSuit + ".png";
+    cardImg.src = "/BlackJack/assets/img/" + card.cardValue + "_" + card.cardSuit + ".png";
     cardImg.className='card-image';    
     document.getElementById(playerOrDealerCards).append(cardImg);
     if (playerTotal == 21) {
@@ -137,6 +137,7 @@ async function stay() {
     if (!hasBet) {
       return;
     }
+    toggleStay();
     canHit = false;
     console.log("dealer: " + dealerTotal + "player: " + playerTotal)
     while(dealerTotal < 17){
@@ -149,15 +150,15 @@ async function stay() {
       console.log("card weight 1:" + card.cardWeight)
       changeAce();
       console.log("card weight 2:" + card.cardWeight)
-      cardImg.src = "/assets/img/" + card.cardValue + "_" + card.cardSuit + ".png";
+      cardImg.src = "/BlackJack/assets/img/" + card.cardValue + "_" + card.cardSuit + ".png";
       cardImg.className='card-image';
       document.getElementById("dealer-cards").append(cardImg);
-      // Add a delay of 1 second (1000 milliseconds)
       await sleep(500);
     }
-    document.getElementById("hidden-card").src = "/assets/img/" + hiddenCard.cardValue + "_" + hiddenCard.cardSuit + ".png";
+    document.getElementById("hidden-card").src = "/BlackJack/assets/img/" + hiddenCard.cardValue + "_" + hiddenCard.cardSuit + ".png";
     document.getElementById("dealer-total").innerHTML = "Dealer: " + dealerTotal;
     document.getElementById("player-total").innerHTML = "You:   " + playerTotal;
+    toggleStay();
     checkRound();
 }
 
@@ -191,7 +192,7 @@ function checkRound() {
 }
 
 function playAgain() {
-    document.getElementById("hidden-card").src = "/assets/img/cardBack_newRed.png";
+    document.getElementById("hidden-card").src = "/BlackJack/assets/img/cardBack_newRed.png";
     playerTotal = 0;
     dealerTotal = 0; 
     playerAceCount = 0;
@@ -210,7 +211,7 @@ function playAgain() {
 }
 
 function nextRound() {
-    document.getElementById("hidden-card").src = "/assets/img/cardBack_newRed.png";
+    document.getElementById("hidden-card").src = "/BlackJack/assets/img/cardBack_newRed.png";
     playerTotal = 0;
     dealerTotal = 0; 
     playerAceCount = 0;
