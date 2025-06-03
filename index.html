@@ -1,61 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blackjack</title>
-    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./styles.css" />
     <script src="./scripts.js"></script>
-</head>
-<body>
-    <img id="poker-table" src="/BlackJack/assets/img/pokerTable.png" alt="">
-    </div>   
+  </head>
+  <body>
+    <div id="poker-table"></div>
     <div class="board-container">
-        <div class="dealer" id="dealer-cards">
-            <img id="hidden-card" src="" alt="">
+      <div class="dealer" id="dealer-cards">
+        <img id="hidden-card" src="" alt="" />
+      </div>
+      <div class="sum-container">
+        <h2 id="dealer-total"></h2>
+        <h2 id="player-total"></h2>
+      </div>
+      <div class="player" id="player-cards"></div>
+      <div class="options-container">
+        <div class="buttons">
+          <button onclick="hit()" id="hitBtn">Hit</button>
+          <button onclick="bet()" id="betBtn">Bet</button>
+          <button onclick="stay()" id="stayBtn">Stay</button>
         </div>
-        <div class="sum-container">
-            <h2 id="dealer-total"></h2>
-            <h2 id="player-total"></h2>
+        <div class="betRange">
+          <input
+            type="range"
+            step="10"
+            min="10"
+            max="200"
+            value="500"
+            class="slider"
+            id="betSlider"
+            oninput="this.nextElementSibling.value = this.value"
+          />
+          <output id="betAmount">10</output>
         </div>
-        <div class="player" id="player-cards">
+
+        <div id="stats-container">
+          <span id="chips"></span>
+          <span id="currentBet"></span>
+          <span id="points"></span>
+          <span id="lives"></span>
         </div>
-        <div class="options-container">
-            <div class="buttons">
-                <button onclick=hit() id="hitBtn">Hit</button>
-                <button onclick=bet() id="betBtn">Bet</button>
-                <button onclick=stay() id="stayBtn">Stay</button>
-            </div>   
-            <div class="betRange">
-                <input type="range" step=10 min="10" max="200" value="500" class="slider" id="betSlider" oninput="this.nextElementSibling.value = this.value">
-                <output id="betAmount">10</output> 
-            </div>
-                    
-            <div id="stats-container">     
-                <span id="chips"></span>
-                <span id="currentBet"></span>
-                <span id="points"></span>
-                <span id="lives"></span>
-            </div>        
-        </div>
-   
-    </div> 
+      </div>
+    </div>
     <div id="next-round">
-        <div class="next-round-container">
-            <span id="round-msg">Next Round</span>
-            <button id="go-next-round" class="play-again" onclick=nextRound()>Next Round</button>
-        </div>
+      <div class="next-round-container">
+        <span id="round-msg">Next Round</span>
+        <button id="go-next-round" class="play-again" onclick="nextRound()">
+          Next Round
+        </button>
+      </div>
     </div>
     <div id="game-over">
-        <div class="game-over-container">
-            <span>Game Over</span>
-            <button id="play-again" class="play-again" onclick=playAgain()>Play Again</button>
-        </div>
+      <div class="game-over-container">
+        <span>Game Over</span>
+        <button id="play-again" class="play-again" onclick="playAgain()">
+          Play Again
+        </button>
+      </div>
     </div>
-    <div class="no-mobile-support">
-        <h1>Sorry, this game doesn't support this screen size yet. <br> If you have resized your window, maximize it and you might be able to play.</h1>
-    </div>
-</body>
-
+  </body>
 </html>
