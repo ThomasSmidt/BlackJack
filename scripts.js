@@ -78,7 +78,7 @@ function shuffleDeck(deck) {
 
 function runGame() {
   let hiddenCardImage = document.getElementById("hidden-card");
-  hiddenCardImage.src = "/assets/img/cardBack_newRed.png";
+  hiddenCardImage.src = "/BlackJack/assets/img/cardBack_newRed.png";
   hiddenCard = deck.pop();
   dealerTotal += hiddenCard.cardWeight;
   createCard("dealer-cards", isDealer);
@@ -104,7 +104,8 @@ async function createCard(playerOrDealerCards = "", isDealer) {
     playerAceCount += checkAce(card.cardValue);
     changeAce();
   }
-  cardImg.src = "/assets/img/" + card.cardValue + "_" + card.cardSuit + ".png";
+  cardImg.src =
+    "/BlackJack/assets/img/" + card.cardValue + "_" + card.cardSuit + ".png";
   cardImg.className = "card-image";
   document.getElementById(playerOrDealerCards).append(cardImg);
   if (playerTotal == 21) {
@@ -148,13 +149,17 @@ async function stay() {
     dealerAceCount += checkAce(card.cardValue);
     changeAce();
     cardImg.src =
-      "/assets/img/" + card.cardValue + "_" + card.cardSuit + ".png";
+      "/BlackJack/assets/img/" + card.cardValue + "_" + card.cardSuit + ".png";
     cardImg.className = "card-image";
     document.getElementById("dealer-cards").append(cardImg);
     await sleep(500);
   }
   document.getElementById("hidden-card").src =
-    "/assets/img/" + hiddenCard.cardValue + "_" + hiddenCard.cardSuit + ".png";
+    "/BlackJack/assets/img/" +
+    hiddenCard.cardValue +
+    "_" +
+    hiddenCard.cardSuit +
+    ".png";
   document.getElementById("dealer-total").innerHTML = "Dealer: " + dealerTotal;
   document.getElementById("player-total").innerHTML = "You:   " + playerTotal;
   toggleStay();
@@ -195,7 +200,7 @@ function checkRound() {
 
 function playAgain() {
   document.getElementById("hidden-card").src =
-    "/assets/img/cardBack_newRed.png";
+    "/BlackJack/assets/img/cardBack_newRed.png";
   playerTotal = 0;
   dealerTotal = 0;
   playerAceCount = 0;
@@ -215,7 +220,7 @@ function playAgain() {
 
 function nextRound() {
   document.getElementById("hidden-card").src =
-    "/assets/img/cardBack_newRed.png";
+    "/BlackJack/assets/img/cardBack_newRed.png";
   playerTotal = 0;
   dealerTotal = 0;
   playerAceCount = 0;
